@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>如何進行建設性批評｜讓批評促進交流，而不是吵架</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F9F8; --surface:#FFFFFF; --ink:#12343B; --muted:#4A666C;
+  --teal:#028090; --teal-soft:#DDF0EE; --orange:#E8552D; --orange-soft:#FCE6DE;
+  --amber:#F4A93C; --amber-soft:#FDF0D9; --line:#D3E3E1;
+  --round:"Huninn","Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;
+  --sans:"Noto Sans TC","Microsoft JhengHei","PingFang TC","Heiti TC",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F2226; --surface:#163039; --ink:#E6F1F0; --muted:#A3BEC0;
+    --teal:#3BB3BF; --teal-soft:#173F45; --orange:#FF7A55; --orange-soft:#41261F;
+    --amber:#F4B85A; --amber-soft:#3B3020; --line:#2A4750;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F2226; --surface:#163039; --ink:#E6F1F0; --muted:#A3BEC0;
+  --teal:#3BB3BF; --teal-soft:#173F45; --orange:#FF7A55; --orange-soft:#41261F;
+  --amber:#F4B85A; --amber-soft:#3B3020; --line:#2A4750;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+h1,h2,h3{font-family:var(--round);font-weight:400;line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,label:focus-within{outline:3px solid var(--amber);outline-offset:3px;border-radius:12px}
+.wrap{max-width:780px;margin:0 auto;padding:0 22px}
+section{padding:64px 0}
+section+section{border-top:2px dashed var(--line)}
+.sec-title{font-size:clamp(28px,5vw,38px);margin-bottom:10px}
+.sec-lead{color:var(--muted);margin-bottom:32px;font-size:18px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;padding:56px 0 64px}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;z-index:0}
+.hero::before{width:340px;height:340px;background:var(--teal-soft);top:-120px;right:-90px}
+.hero::after{width:220px;height:220px;background:var(--amber-soft);bottom:-80px;left:-70px}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(36px,8vw,60px);margin-bottom:14px;letter-spacing:.02em}
+.hero .sub{font-size:clamp(18px,3vw,21px);color:var(--muted);max-width:34em;margin-bottom:34px}
+.demo{background:var(--surface);border-radius:28px;padding:22px;box-shadow:0 10px 0 var(--line);border:2px solid var(--line)}
+.demo-ctx{font-size:15px;color:var(--muted);margin-bottom:14px}
+.switch{display:inline-flex;background:var(--bg);border-radius:999px;padding:5px;margin-bottom:18px;border:2px solid var(--line)}
+.switch button{border:0;background:transparent;border-radius:999px;padding:8px 20px;font-size:17px;font-family:var(--round)}
+.switch button[aria-pressed="true"].bad{background:var(--orange);color:#fff}
+.switch button[aria-pressed="true"].good{background:var(--teal);color:#fff}
+.bubble{position:relative;border-radius:22px 22px 22px 6px;padding:18px 20px;font-size:19px;transition:background .35s,color .35s}
+.bubble.bad{background:var(--orange-soft)}
+.bubble.good{background:var(--teal-soft)}
+.bubble p{margin:0}
+.outcome{display:flex;gap:12px;align-items:flex-start;margin-top:16px;font-size:16px;color:var(--muted)}
+.outcome .dot{flex:none;width:14px;height:14px;border-radius:50%;margin-top:7px}
+.fade{animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Myths ---------- */
+.myths{display:grid;gap:14px}
+.myth{background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:0;text-align:left;width:100%;overflow:hidden}
+.myth-q{display:flex;gap:14px;align-items:center;padding:18px 20px}
+.tag{flex:none;font-family:var(--round);font-size:15px;padding:3px 12px;border-radius:999px}
+.tag.no{background:var(--orange-soft);color:var(--orange)}
+.tag.yes{background:var(--teal-soft);color:var(--teal)}
+.myth-q strong{font-family:var(--round);font-weight:400;font-size:20px;flex:1}
+.myth-q .plus{flex:none;width:30px;height:30px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:20px;transition:transform .25s}
+.myth[aria-expanded="true"] .plus{transform:rotate(45deg)}
+.myth-a{display:none;gap:14px;padding:0 20px 20px;align-items:flex-start}
+.myth[aria-expanded="true"] .myth-a{display:flex}
+.myth-a p{margin:0}
+
+/* ---------- Ladder ---------- */
+.ladder{display:grid;gap:10px;position:relative}
+.rung{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center}
+.rung .lv{font-family:var(--round);font-size:16px;color:var(--muted);text-align:right}
+.bar{border-radius:14px;padding:10px 16px;color:#fff;min-height:58px}
+.bar b{font-family:var(--round);font-weight:400;font-size:19px;display:block}
+.bar span{font-size:15px;opacity:.95}
+.goal{margin:6px 0 6px 76px;border-top:3px dashed var(--teal);padding-top:6px;font-family:var(--round);color:var(--teal);font-size:16px}
+.axis{display:flex;justify-content:space-between;margin:14px 0 0 76px;font-size:15px;color:var(--muted)}
+
+/* ---------- Principles ---------- */
+.prin{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pcard{background:var(--surface);border-radius:22px;padding:22px;border:2px solid var(--line)}
+.pcard .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:12px}
+.pcard h3{font-size:22px;margin-bottom:6px}
+.pcard p{font-size:16px;margin:0 0 10px;color:var(--muted)}
+.pcard .eg{font-size:16px;background:var(--bg);border-radius:12px;padding:8px 12px;margin:0;color:var(--ink)}
+
+/* ---------- Mistakes ---------- */
+.mlist{display:grid;gap:16px}
+.mcard{background:var(--surface);border-radius:22px;padding:20px;border:2px solid var(--line)}
+.mcard h3{font-size:22px;margin-bottom:4px}
+.mcard .why{font-size:16px;color:var(--muted);margin-bottom:14px}
+.say{border-radius:16px;padding:12px 16px;font-size:17px;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start}
+.say .tag{margin-top:2px}
+.say.bad{background:var(--orange-soft)}
+.say.good{background:var(--teal-soft);display:none}
+.mcard.open .say.good{display:flex;animation:pop .3s ease}
+.flip{border:2px solid var(--teal);background:transparent;color:var(--teal);border-radius:999px;padding:6px 18px;font-family:var(--round);font-size:16px}
+.mcard.open .flip{background:var(--teal);color:#fff}
+
+/* ---------- Steps ---------- */
+.steps{list-style:none;margin:0 0 28px;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:var(--round);font-size:22px;color:#fff;background:var(--c)}
+.steps h3{font-size:21px;margin:8px 0 2px}
+.steps p{font-size:16px;color:var(--muted);margin:0}
+.assembled{background:var(--surface);border-radius:22px;padding:22px;border:2px solid var(--line)}
+.assembled .head{font-family:var(--round);margin-bottom:10px;color:var(--muted);font-size:16px}
+.assembled p{font-size:19px;line-height:2;margin:0}
+.seg{border-radius:8px;padding:2px 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.note{margin-top:16px;font-size:16px;color:var(--muted)}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 20px;font-family:var(--round);font-size:17px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{background:var(--surface);border-radius:22px;padding:24px;border:2px solid var(--line)}
+.panel[hidden]{display:none}
+.panel ul{margin:0 0 18px;padding-left:1.2em}
+.panel li{margin-bottom:8px}
+.panel .ex{background:var(--teal-soft);border-radius:16px;padding:14px 18px}
+.panel .ex b{font-family:var(--round);font-weight:400;color:var(--teal);display:block;font-size:16px}
+
+/* ---------- Phrases ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:2px solid var(--line);background:var(--surface);border-radius:16px;padding:10px 16px;font-size:17px;text-align:left}
+.chip:hover{border-color:var(--teal)}
+.chip.copied{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+/* ---------- Quiz ---------- */
+.q{background:var(--surface);border-radius:22px;padding:22px;border:2px solid var(--line);margin-bottom:16px}
+.q h3{font-size:20px;margin-bottom:12px}
+.q .opts{display:grid;gap:10px}
+.q .opts button{text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:12px 16px;font-size:17px}
+.q .opts button.right{border-color:var(--teal);background:var(--teal-soft)}
+.q .opts button.wrong{border-color:var(--orange);background:var(--orange-soft)}
+.q .fb{margin-top:12px;font-size:16px;color:var(--muted);display:none}
+.q.done .fb{display:block}
+.score{font-family:var(--round);font-size:20px;text-align:center;margin-top:8px}
+
+/* ---------- Checklist ---------- */
+.check{background:var(--surface);border-radius:26px;padding:24px;border:2px solid var(--line);display:grid;grid-template-columns:1fr;gap:22px}
+@media(min-width:640px){.check{grid-template-columns:170px 1fr;align-items:center}}
+.ring{position:relative;width:150px;height:150px;margin:0 auto}
+.ring svg{transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--round);font-size:16px;line-height:1.3}
+.ring .num b{display:block;font-weight:400;font-size:34px}
+.ck{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;border-bottom:1px solid var(--line);font-size:17px;cursor:pointer}
+.ck:last-child{border-bottom:0}
+.ck input{width:24px;height:24px;margin-top:3px;accent-color:var(--teal);flex:none}
+.ready{grid-column:1/-1;text-align:center;font-family:var(--round);font-size:20px;color:var(--teal);min-height:1.5em}
+
+/* ---------- Receiving ---------- */
+.recv{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.recv div{background:var(--amber-soft);border-radius:20px;padding:20px}
+.recv h3{font-size:20px;margin-bottom:6px}
+.recv p{font-size:16px;margin:0}
+
+
+/* ---------- Jump nav ---------- */
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.jump a{font-size:15px;text-decoration:none;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:5px 14px}
+.jump a:hover{border-color:var(--teal)}
+
+/* ---------- Scenarios ---------- */
+.flow{display:grid;gap:10px;margin:4px 0 22px}
+.fq{background:var(--amber-soft);border-radius:16px;padding:12px 16px;font-family:var(--round);font-size:18px;text-align:center}
+.fsplit{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fo{border-radius:16px;padding:12px 14px;font-size:16px}
+.fo b{display:block;font-family:var(--round);font-weight:400;font-size:17px;margin-bottom:2px}
+.fo.yes{background:var(--teal-soft)}
+.fo.no{background:var(--bg);border:2px dashed var(--line)}
+.fo.stop{background:var(--orange-soft)}
+.down{text-align:center;color:var(--muted);font-size:20px;line-height:1}
+.panel h4{font-family:var(--round);font-weight:400;font-size:20px;margin:22px 0 10px}
+.panel h4:first-child{margin-top:0}
+.reply{border-radius:16px;padding:12px 16px;margin-bottom:10px;font-size:17px}
+.reply small{display:block;font-family:var(--round);font-size:15px;color:var(--muted);margin-bottom:2px}
+.reply.ok{background:var(--teal-soft)}
+.reply.bad{background:var(--orange-soft)}
+
+/* ---------- Cases ---------- */
+.disclaim{background:var(--surface);border-left:6px solid var(--amber);border-radius:12px;padding:12px 16px;font-size:16px;color:var(--muted);margin-bottom:24px}
+.case{background:var(--surface);border:2px solid var(--line);border-radius:24px;overflow:hidden;margin-bottom:22px}
+.case-head{padding:20px 22px;background:var(--teal-soft)}
+.case-head .meta{font-size:15px;color:var(--muted);margin-bottom:4px}
+.case-head h3{font-size:23px}
+.case-body{padding:20px 22px}
+.case h4{font-family:var(--round);font-weight:400;font-size:19px;margin:18px 0 8px}
+.case h4:first-child{margin-top:0}
+.case p{font-size:17px}
+.issues{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.issues li{display:flex;gap:10px;align-items:flex-start;font-size:17px}
+.issues .tag{margin-top:3px}
+.rw{background:var(--teal-soft);border-radius:16px;padding:14px 18px;font-size:17px}
+.rw small{display:block;font-family:var(--round);color:var(--teal);font-size:15px;margin-bottom:4px}
+.src{font-size:14px;color:var(--muted);margin-top:14px}
+.src a{color:var(--muted)}
+
+
+/* ---------- Bias section ---------- */
+.layers{display:grid;gap:10px;margin:0 0 14px}
+.layer{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center;border-radius:20px;padding:16px 20px}
+.layer b{font-family:var(--round);font-weight:400;font-size:22px;text-align:center}
+.layer p{margin:0;font-size:17px}
+.layer small{display:block;color:var(--muted);font-size:15px;margin-top:2px}
+.l1{background:var(--orange-soft)}.l1 b{color:var(--orange)}
+.l2{background:var(--amber-soft)}.l2 b{color:#B5730C}
+.l3{background:var(--teal-soft)}.l3 b{color:var(--teal)}
+.callout{background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:18px 22px;margin:22px 0 30px;font-size:17px}
+.callout b{font-family:var(--round);font-weight:400;font-size:19px;display:block;margin-bottom:4px}
+.dual{display:grid;gap:12px;margin-bottom:22px}
+@media(min-width:680px){.dual.two{grid-template-columns:1fr 1fr}}
+.sub-h{font-family:var(--round);font-size:23px;margin:34px 0 14px}
+
+footer{padding:40px 0 56px;text-align:center;color:var(--muted);font-size:16px}
+footer a{color:var(--teal)}
+.closing{font-family:var(--round);font-size:clamp(24px,4.5vw,32px);text-align:center;color:var(--ink);margin:0 auto;max-width:18em;line-height:1.5}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:480px){body{font-size:17px}.rung{grid-template-columns:48px 1fr}.goal,.axis{margin-left:60px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>批評，是為了讓事情變得更好</h1>
+    <p class="sub">留言、Threads 討論、日常溝通都用得上的建設性批評指引。批評要留有餘地，目的是交流與一起進步，而不是把對方罵倒。</p>
+
+    <div class="demo">
+      <div class="demo-ctx">情境：有人分享了一段帶長輩做運動的影片，你發現動作有點問題。</div>
+      <div class="switch" role="group" aria-label="切換說法">
+        <button class="bad" aria-pressed="true" data-mode="bad">情緒版</button>
+        <button class="good" aria-pressed="false" data-mode="good">建設版</button>
+      </div>
+      <div class="bubble bad" id="bubble"><p id="bubbleText"></p></div>
+      <div class="outcome"><span class="dot" id="outDot"></span><span id="outText"></span></div>
+    </div>
+    <nav class="jump" aria-label="快速跳到">
+      <a href="#cases">時事案例</a><a href="#myths">常見迷思</a><a href="#principles">八個原則</a><a href="#mistakes">錯誤回覆</a><a href="#steps">五個步驟</a><a href="#situations">棘手情境</a><a href="#bias">立場與情緒</a><a href="#checklist">送出前檢查</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="cases">
+  <div class="wrap">
+    <h2 class="sec-title">從時事案例看批評的方式</h2>
+    <p class="sec-lead">先從幾個引起廣泛討論的事件看起。同一個意見，說的方式不同，結果就會很不一樣。</p>
+    <p class="disclaim">以下內容整理自新聞報導，只討論當時的表達方式和大眾的反應，不評論當事人的為人。改寫示範是假設的說法，並非當事人說過的話。</p>
+    <div id="caseList"></div>
+  </div>
+</section>
+
+<section id="myths">
+  <div class="wrap">
+    <h2 class="sec-title">先破除六個常見想法</h2>
+    <p class="sec-lead">很多尖銳的回覆，背後其實是幾個聽起來有道理的想法。點開看看。</p>
+    <div class="myths" id="mythList"></div>
+  </div>
+</section>
+
+<section id="ladder">
+  <div class="wrap">
+    <h2 class="sec-title">批評的七個階梯</h2>
+    <p class="sec-lead">同樣是「不同意」，說法可以落在不同的位置。越往下，對方越有機會聽進去、做出改變。</p>
+    <div class="ladder" id="ladderList"></div>
+    <div class="axis"><span>只有情緒</span><span>可以一起討論</span></div>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap">
+    <h2 class="sec-title">八個原則</h2>
+    <p class="sec-lead">不論在哪裡溝通，這八件事都適用。</p>
+    <div class="prin" id="prinList"></div>
+  </div>
+</section>
+
+<section id="mistakes">
+  <div class="wrap">
+    <h2 class="sec-title">常見的錯誤回覆</h2>
+    <p class="sec-lead">每一種都附上改寫的方式。按「看改寫」比較兩種說法。</p>
+    <div class="mlist" id="mistakeList"></div>
+  </div>
+</section>
+
+<section id="steps">
+  <div class="wrap">
+    <h2 class="sec-title">好的批評怎麼說：五個步驟</h2>
+    <p class="sec-lead">把一段批評拆開來看，大致是這五個部分。</p>
+    <ol class="steps">
+      <li style="--c:var(--amber)"><div><h3>肯定具體的地方</h3><p>真心、具體地說出對方做得好的部分，不是客套話。</p></div></li>
+      <li style="--c:var(--orange)"><div><h3>說出你的觀察</h3><p>指出哪一段、哪一句、哪個動作讓你有疑問。</p></div></li>
+      <li style="--c:#7A5BC2"><div><h3>說明理由</h3><p>為什麼你會這樣想？依據是經驗、觀察還是資料。</p></div></li>
+      <li style="--c:var(--teal)"><div><h3>提出建議</h3><p>可以怎麼調整？給一個方向就好，不必替對方做完。</p></div></li>
+      <li style="--c:var(--ink)"><div><h3>開放回應</h3><p>邀請對方說明或補充，你也可能有沒看到的地方。</p></div></li>
+    </ol>
+    <div class="assembled">
+      <div class="head">組合起來，會是這樣：</div>
+      <p>
+        <span class="seg" style="background:var(--amber-soft)">你整理的居家運動很實用，圖片也很清楚。</span>
+        <span class="seg" style="background:var(--orange-soft)">第三個動作是單腳站立，</span>
+        <span class="seg" style="background:#ECE5F8;color:#3E2A6E">對平衡比較差的長輩來說，旁邊沒有扶手可能容易跌倒。</span>
+        <span class="seg" style="background:var(--teal-soft)">如果加上一句「扶著椅背或桌子做」，會更安心。</span>
+        <span class="seg" style="background:var(--line)">不知道你原本設定的對象是哪一類長輩？</span>
+      </p>
+    </div>
+    <p class="note">不需要每次都五步做滿。留言字數少的時候，至少做到「說出觀察」加上「說明理由」，就已經比單純否定好很多。</p>
+  </div>
+</section>
+
+<section id="contexts">
+  <div class="wrap">
+    <h2 class="sec-title">不同場合的小提醒</h2>
+    <p class="sec-lead">原則一樣，但留言區、Threads 和面對面溝通，各有需要注意的地方。</p>
+    <div class="tabs" role="tablist" aria-label="場合">
+      <button role="tab" aria-selected="true" aria-controls="p1" id="t1">留言區</button>
+      <button role="tab" aria-selected="false" aria-controls="p2" id="t2">Threads 討論</button>
+      <button role="tab" aria-selected="false" aria-controls="p3" id="t3">日常溝通</button>
+    </div>
+    <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+      <ul>
+        <li>一則留言只講一個重點，對方比較容易回應。</li>
+        <li>先引用對方的原句，再說明你的看法，避免各說各話。</li>
+        <li>這是對方的版面，語氣要像在別人家作客。</li>
+        <li>分歧比較大、或涉及對方個人的錯誤，可以改用私訊。</li>
+      </ul>
+      <div class="ex"><b>可以這樣留</b>「文中提到『每天要喝 3000cc』，想請問這個建議適用所有人嗎？我知道有些腎臟或心臟狀況需要限水，若能加上提醒會更周全。」</div>
+    </div>
+    <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+      <ul>
+        <li>回覆前先看完整串，確認自己理解的脈絡是對的。</li>
+        <li>引用或轉發時保留原意，不要只截取片段來反駁。</li>
+        <li>如果很多人已經指出同一點，不需要再補一刀，按讚支持就好。</li>
+        <li>多用提問，少用宣判。「你是怎麼看的？」比「你錯了」更容易接著聊。</li>
+      </ul>
+      <div class="ex"><b>可以這樣回</b>「這個觀點很有意思。我自己的經驗比較不一樣，在社區帶課時發現……不知道你遇到的情況是哪一種？」</div>
+    </div>
+    <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+      <ul>
+        <li>選對時間與地點，不在其他人面前指正對方。</li>
+        <li>用「我」開頭的說法：我看到什麼、我擔心什麼、我希望什麼。</li>
+        <li>說完之後停下來，聽對方怎麼回應。</li>
+        <li>一次談一件事，不要把累積的不滿一起倒出來。</li>
+      </ul>
+      <div class="ex"><b>可以這樣說</b>「我看到這週的紀錄有兩份還沒交，我有點擔心月底核銷來不及。我們要不要一起看看，哪裡需要我幫忙？」</div>
+    </div>
+  </div>
+</section>
+
+<section id="situations">
+  <div class="wrap">
+    <h2 class="sec-title">遇到這些情境，可以這樣回應</h2>
+    <p class="sec-lead">有時候我們不是批評的人，而是被批評、被挑釁的那一方。以下六種情境最常遇到。</p>
+    <div class="tabs" role="tablist" aria-label="情境">
+      <button role="tab" aria-selected="true" aria-controls="s1" id="st1">被人身攻擊</button>
+      <button role="tab" aria-selected="false" aria-controls="s2" id="st2">被拉進敏感話題</button>
+      <button role="tab" aria-selected="false" aria-controls="s3" id="st3">工作上的批評</button>
+      <button role="tab" aria-selected="false" aria-controls="s4" id="st4">情緒化的批評</button>
+      <button role="tab" aria-selected="false" aria-controls="s5" id="st5">遇到造謠</button>
+      <button role="tab" aria-selected="false" aria-controls="s6" id="st6">批評網路說法或標題</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s1" aria-labelledby="st1">
+      <h4>在臉書、IG 上，有人攻擊你的專業、長相或家人</h4>
+      <div class="flow" aria-label="判斷流程">
+        <div class="fq">這則留言有具體的內容嗎？</div>
+        <div class="fsplit">
+          <div class="fo yes"><b>有</b>針對內容回應，忽略情緒字眼。</div>
+          <div class="fo no"><b>沒有</b>繼續往下判斷。</div>
+        </div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">有沒有牽涉家人、孩子或人身安全？</div>
+        <div class="fsplit">
+          <div class="fo stop"><b>有</b>不回應，截圖留存後刪除、封鎖；嚴重時檢舉或尋求法律協助。</div>
+          <div class="fo no"><b>沒有</b>可以不回、隱藏留言，或只簡短回應一次。</div>
+        </div>
+      </div>
+      <h4>攻擊專業</h4>
+      <div class="reply bad"><small>留言</small>「職能治療就是陪老人玩，騙健保的錢。」</div>
+      <div class="reply ok"><small>可以這樣回</small>「謝謝留言。職能治療會依每個人的評估結果設計活動，目標是讓長輩能自己完成生活中的事。如果你對文中哪一個做法有疑問，很歡迎具體提出來討論。」</div>
+      <h4>攻擊長相</h4>
+      <div class="reply bad"><small>留言</small>「長這樣也敢出來拍影片。」</div>
+      <div class="reply ok"><small>可以這樣做</small>不需要回應，也不需要解釋自己的外表，直接隱藏這則留言。如果真的想回：「謝謝收看，這支影片的重點是起身訓練，對動作有問題歡迎討論。」</div>
+      <h4>攻擊家人</h4>
+      <div class="reply bad"><small>留言</small>任何針對你的伴侶、孩子或父母的嘲諷與威脅。</div>
+      <div class="reply ok"><small>可以這樣做</small>不和對方辯論。先截圖保存，再刪除留言、封鎖帳號。也可以在粉專公告規則：「歡迎討論內容；牽涉家人的留言會直接刪除。」</div>
+      <p class="note">記得：回應的對象其實不只是留言的人，還有在旁邊看的其他讀者。冷靜、聚焦內容的回應，會讓讀者看見你的專業。</p>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s2" aria-labelledby="st2" hidden>
+      <h4>有人故意找你爭論容易對立的話題</h4>
+      <p>像是政治、宗教這類話題，大家的立場往往很難因為一次討論而改變，很容易變成情緒化的爭吵。你可以選擇不參與，這也是一種成熟的回應。</p>
+      <h4>先判斷：對方想交流，還是想吵架？</h4>
+      <ul>
+        <li>如果對方有提出理由、願意聽你說，可以把它當成一次交流。</li>
+        <li>如果對方只是貼標籤、不斷挑釁，你沒有義務參與。</li>
+      </ul>
+      <h4>不想參與時</h4>
+      <div class="reply ok"><small>可以這樣說</small>「謝謝你的關心。這個頁面主要分享健康促進的內容，這類話題我就不在這裡討論，謝謝理解。」</div>
+      <h4>立場被批評時</h4>
+      <div class="reply bad"><small>留言</small>「會這樣想的人都是笨蛋。」</div>
+      <div class="reply ok"><small>可以這樣回</small>「我們的看法不同，這沒關係。如果你願意說說你的理由，我會認真看；但用『笨蛋』稱呼別人，我就不回應了。」</div>
+      <h4>幾個提醒</h4>
+      <ul>
+        <li>不幫對方貼標籤，也不用標籤稱呼人。</li>
+        <li>一次只談一件事，不要一路扯到其他事件。</li>
+        <li>隨時可以停下來，不需要辯到有輸贏。</li>
+      </ul>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s3" aria-labelledby="st3" hidden>
+      <h4>當主管直接批評你</h4>
+      <ul>
+        <li>先聽完，不急著打斷或解釋。</li>
+        <li>確認具體內容：指的是哪一件事、哪一個部分。</li>
+        <li>把事實和感受分開：先處理「哪裡要改」，情緒可以下班後再消化。</li>
+        <li>提出改善做法與完成時間。</li>
+        <li>如果覺得批評不公平，等雙方都冷靜時，再用事實說明。</li>
+      </ul>
+      <div class="reply bad"><small>主管說</small>「你這份個案報告寫得亂七八糟。」</div>
+      <div class="reply ok"><small>可以這樣回</small>「了解。想確認一下，是評估結果的部分不清楚，還是目標寫得不夠具體？我明天中午前修改好再請您看一次。」</div>
+      <h4>當你要批評下屬或同事</h4>
+      <ul>
+        <li>私下說，而且盡快說，不要累積到年終一次講。</li>
+        <li>用「情境、行為、影響」三個部分描述，不評論個性。</li>
+        <li>先問對方怎麼看，也許有你不知道的狀況。</li>
+        <li>一起討論改善的方法，之後記得追蹤，有進步就說出來。</li>
+      </ul>
+      <div class="reply bad"><small>不建議</small>「你怎麼這麼粗心，每次都這樣。」</div>
+      <div class="reply ok"><small>可以這樣說</small>「昨天的家訪紀錄（情境），沒有寫到跌倒風險評估（行為），個管師就沒辦法幫長輩申請扶手（影響）。那天是遇到什麼狀況嗎？下次我們一起把這一項加進檢查表。」</div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s4" aria-labelledby="st4" hidden>
+      <h4>遇到不合理、情緒化的批評</h4>
+      <p>目標不是辯贏，而是讓對話降溫。對方的情緒你不需要接住，但可以不要再加溫。</p>
+      <div class="flow" aria-label="降溫流程">
+        <div class="fq">第一步：先停一下，不在情緒最高點回覆</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">第二步：說出對方的情緒，但不承認不實的指控</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">第三步：找出可能有道理的那一點，只回應那一點</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fsplit">
+          <div class="fo yes"><b>對方願意談</b>邀請私訊或當面了解細節。</div>
+          <div class="fo stop"><b>對方繼續情緒化</b>留下一句說明就停止，不再來回。</div>
+        </div>
+      </div>
+      <h4>第一次回覆</h4>
+      <div class="reply bad"><small>留言</small>「你們這種課根本騙錢，浪費我爸的時間！」</div>
+      <div class="reply bad"><small>容易吵起來的回法</small>「你自己不會看清楚課程內容嗎？不喜歡就不要來啊。」</div>
+      <div class="reply ok"><small>可以這樣回</small>「很抱歉讓你有這樣的感受。想了解一下，是哪一堂課讓爸爸覺得沒有收穫？方便的話請私訊我們，我們想聽聽詳細的情況，看看可以怎麼調整。」</div>
+      <h4>對方還是持續謾罵</h4>
+      <div class="reply bad"><small>留言</small>「不用裝了，你們就是騙子。」</div>
+      <div class="reply ok"><small>最後一次回覆</small>「了解你現在很生氣。課程內容與收費方式都公開在這裡（附連結）。如果之後願意談，隨時歡迎私訊我們。」說完就停，不再回應。</div>
+      <h4>幾個提醒</h4>
+      <ul>
+        <li>不反問、不反諷、不翻舊帳，這三件事最容易讓對話升溫。</li>
+        <li>公開來回最多兩次。真正要解決問題，改到私訊或電話。</li>
+        <li>你的回覆是寫給所有旁觀者看的。冷靜的態度，旁人自然會判斷誰有道理。</li>
+      </ul>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s5" aria-labelledby="st5" hidden>
+      <h4>有人散布不實的說法</h4>
+      <p>造謠會傷害人，也會讓錯誤的訊息一直流傳下去，遇到時應該指出來、批評它。重點是用證據批評「散布不實說法」這個行為，而不是罵人。證據越完整，你就越不需要用力。</p>
+      <div class="flow" aria-label="處理流程">
+        <div class="fq">保存證據：截圖、連結、發布時間、轉傳情況</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">用事實更正：一個錯誤說法，配一個事實和一個來源</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">請對方刪除或更正</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fsplit">
+          <div class="fo yes"><b>對方更正了</b>謝謝對方，事情到此為止。</div>
+          <div class="fo stop"><b>拒絕且造成傷害</b>向平台檢舉，必要時採取法律行動。</div>
+        </div>
+      </div>
+      <h4>先分清兩種情況</h4>
+      <div class="fsplit" style="margin-bottom:12px">
+        <div class="fo no"><b>誤會、斷章取義</b>對方可能只是轉貼時沒查證。說「這個說法和事實不符」，並附上原始資料就好。</div>
+        <div class="fo stop"><b>捏造、更正後仍散布</b>憑空捏造，或被告知後仍繼續散布。可以直接說「這是不實的說法」「這是造謠」，但一定附上證據。</div>
+      </div>
+      <h4>公開更正時</h4>
+      <div class="reply bad"><small>容易吵起來的回法</small>「你這個造謠的小人，等著收存證信函吧！」</div>
+      <div class="reply ok"><small>可以這樣回</small>「網路上流傳我們的據點會把長輩綁在椅子上，這個說法與事實不符。我們不使用約束，每天的活動流程與照片都公開在粉專（附連結），也歡迎家屬預約參觀。這則內容在我們說明後仍持續被轉傳，已經是散布不實訊息，請大家不要再轉傳。」</div>
+      <h4>私訊對方時</h4>
+      <div class="reply ok"><small>可以這樣說</small>「你好，看到你轉貼的內容提到……，這部分和事實不同，相關資料在這裡（附連結）。可能是轉貼時來源有誤，想麻煩你協助刪除或更正，謝謝。」</div>
+      <p class="note">說「造謠」時，評論的是行為，不需要猜對方的動機，也不需要批評對方的人格。</p>
+      <h4>如果要採取法律行動</h4>
+      <ul>
+        <li><b>先保存證據</b>：完整截圖（含帳號名稱、發布時間）、網址連結、轉傳與留言情況。內容可能被刪除，越早保存越好。</li>
+        <li><b>誹謗與公然侮辱</b>：刑法第 310 條（誹謗）、第 309 條（公然侮辱）屬於告訴乃論，由被造謠或被侮辱的當事人提告，一般要在知道對方是誰後六個月內提出。</li>
+        <li><b>民事求償</b>：名譽受損時，可以依民法請求損害賠償，以及刊登道歉或更正聲明等回復名譽的處分。</li>
+        <li><b>影響公共安寧的謠言</b>：社會秩序維護法第 63 條處罰散布謠言、足以影響公共安寧的行為，可以向警察機關檢舉。</li>
+        <li><b>不是當事人的時候</b>：你沒辦法替別人提告，但可以向平台檢舉、提供查證資料，或把證據交給當事人。</li>
+        <li>法院也會考慮對方是否有合理查證、內容是否涉及公共利益，實際狀況建議先諮詢律師。</li>
+      </ul>
+      <h4>寫澄清文的小技巧</h4>
+      <ul>
+        <li>先講事實，再提錯誤說法，最後再講一次事實。讀者最後記住的會是事實。</li>
+        <li>標題不要重複謠言的原文，避免反而幫忙傳播。</li>
+        <li>附上可以查證的資料，例如公文、照片、官方網站。</li>
+        <li>語氣平穩、內容簡短，比長篇反擊更有說服力。</li>
+      </ul>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s6" aria-labelledby="st6" hidden>
+      <h4>批評網路上的說法或新聞標題時</h4>
+      <p>網路上常有誇大的標題或錯誤的說法，指出來是好事。關鍵是把批評的範圍講清楚：你批評的是「這一則內容」，不是發文的人，也不是整個網站或平台。範圍越小、越具體，別人越難把話題拉走。</p>
+      <div class="flow" aria-label="批評網路說法的步驟">
+        <div class="fq">縮小範圍：只談這一則標題或說法</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">先講正確資訊，再指出「標題說 X，內容是 Y」</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">附上原始資料，讓讀者自己看</div>
+        <div class="down" aria-hidden="true">↓</div>
+        <div class="fq">把標準講成通則：不論誰這樣寫，都會這樣提醒</div>
+      </div>
+      <h4>範例：誇大的健康新聞標題</h4>
+      <div class="reply bad"><small>容易吵起來的寫法</small>「又是垃圾新聞，記者到底有沒有讀書？」</div>
+      <div class="reply ok"><small>可以這樣寫</small>「最近很多人轉傳一則標題『喝咖啡會失智』的新聞。我去看了內文提到的研究，研究只是發現某種關聯，並沒有證明咖啡造成失智，研究者自己也提醒還需要更多研究。標題容易讓人緊張，轉傳前可以先點進去看看原文。」</div>
+      <p class="note">這是示範用的假設情境，實際批評時請依照你查到的原文填寫。</p>
+      <h4>留言出現「別人也這樣」</h4>
+      <div class="reply bad"><small>留言</small>「其他網站還不是都這樣寫，幹嘛只說這篇？」</div>
+      <div class="reply ok"><small>可以這樣回</small>「如果有，也值得指出來。這篇我們先聚焦這一則。」</div>
+      <h4>被猜測動機</h4>
+      <div class="reply bad"><small>留言</small>「你這樣說，一定是收了誰的錢吧。」</div>
+      <div class="reply ok"><small>可以這樣回</small>「我沒有收任何費用。我們回到內容：原文寫了什麼，連結就在這裡，大家可以一起看。」</div>
+      <h4>幾個提醒</h4>
+      <ul>
+        <li>一般的誇大標題，說「標題和內容有落差」就好，讓事實說話。如果是捏造的說法，可以直接說「不實」或「造謠」，但一定附上證據（參考「遇到造謠」分頁）。</li>
+        <li>發文前先看過完整內容與原始資料，確認自己說的落差是正確的。</li>
+        <li>類似的留言只回一次，不比較「誰比較多」。一開始解釋，焦點就從內容轉到你身上了。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="bias">
+  <div class="wrap">
+    <h2 class="sec-title">當事實被立場和情緒蓋過</h2>
+    <p class="sec-lead">有些說法明顯和事實不符，卻還是有人深信不疑。錯誤的說法確實需要指出來，但要怎麼說，想法不同的人才聽得進去？</p>
+
+    <div class="layers" aria-label="溝通的三個層次">
+      <div class="layer l1"><b>情緒</b><p>「好擔心」「太可怕了」<small>先被理解，才有空間聽別的</small></p></div>
+      <div class="layer l2"><b>價值</b><p>「我在意長輩的安全」「我在意長輩的自主」<small>可以不同，但都值得尊重</small></p></div>
+      <div class="layer l3"><b>事實</b><p>「原文、研究、資料到底寫了什麼」<small>可以一起查證</small></p></div>
+    </div>
+    <p class="note">很多爭吵，是因為這三層混在一起。對方還在情緒裡，我們卻急著丟事實；對方在談在意的事，我們卻在糾正用詞。順序可以是：先接住情緒，再承認對方在意的價值，最後一起看事實。</p>
+
+    <div class="callout"><b>例子：「長輩跌倒過，就少走路比較安全」</b>說這句話的人，通常是因為很擔心長輩再受傷。這份擔心是真的，但完全不動，肌力和平衡反而會越來越差。雙方其實都希望長輩安全，差別在做法。先說出「我知道你是擔心他」，對方才比較願意聽「適度、安全的活動反而有幫助」。</div>
+
+    <h3 class="sub-h">七個做法，讓想法不同的人聽得進去</h3>
+    <div class="prin" id="biasList"></div>
+
+    <h3 class="sub-h">對照看看</h3>
+    <div class="dual">
+      <div class="reply bad"><small>留言</small>「我爸跌倒過，以後就讓他坐著就好，運動太危險了！」</div>
+      <div class="dual two">
+        <div class="reply bad"><small>容易吵起來</small>「這觀念太落伍了吧，這樣只會害了他。」</div>
+        <div class="reply ok"><small>比較聽得進去</small>「你這麼擔心爸爸，我很能理解，跌倒真的很可怕。我在帶長輩運動時發現，完全不動反而會讓腿越來越沒力。可以先從坐著做、有人陪著的運動開始，你覺得爸爸會願意試試看嗎？」</div>
+      </div>
+    </div>
+    <div class="dual">
+      <div class="reply bad"><small>留言</small>「新聞都說喝咖啡會失智了，你還在喝！」</div>
+      <div class="dual two">
+        <div class="reply bad"><small>容易吵起來</small>「看標題就信，難怪會被騙。」</div>
+        <div class="reply ok"><small>比較聽得進去</small>「謝謝你提醒我，這個標題我第一次看也嚇一跳。後來去看了內文，研究只是發現某種關聯，還不能說是咖啡造成的。我把原文貼給你，我們一起看看？」</div>
+      </div>
+    </div>
+    <p class="note">以上是示範用的情境。指出錯誤之前，自己先查證，是讓人信服的第一步。</p>
+  </div>
+</section>
+
+<section id="phrases">
+  <div class="wrap">
+    <h2 class="sec-title">好用的開頭句</h2>
+    <p class="sec-lead">不知道怎麼開口的時候，可以從這些句子開始。點一下就能複製。</p>
+    <div class="chips" id="chipList"></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <h2 class="sec-title">小練習：哪一種說法比較好？</h2>
+    <p class="sec-lead">選出你覺得最能促進交流的回覆。</p>
+    <div id="quizList"></div>
+    <div class="score" id="score"></div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <h2 class="sec-title">送出前，檢查一下</h2>
+    <p class="sec-lead">按下送出之前，花十秒確認這幾件事。</p>
+    <div class="check">
+      <div class="ring">
+        <svg viewBox="0 0 150 150" width="150" height="150" aria-hidden="true">
+          <circle cx="75" cy="75" r="62" fill="none" stroke="var(--line)" stroke-width="14"/>
+          <circle id="ringBar" cx="75" cy="75" r="62" fill="none" stroke="var(--teal)" stroke-width="14" stroke-linecap="round" stroke-dasharray="389.6" stroke-dashoffset="389.6" style="transition:stroke-dashoffset .4s"/>
+        </svg>
+        <div class="num"><div><b id="ckNum">0</b>／6 項</div></div>
+      </div>
+      <div id="ckList"></div>
+      <div class="ready" id="ready" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="receive">
+  <div class="wrap">
+    <h2 class="sec-title">換成自己被批評的時候</h2>
+    <p class="sec-lead">建設性的交流需要兩邊一起練習。收到批評時，可以這樣面對：</p>
+    <div class="recv">
+      <div><h3>先停一下</h3><p>覺得不舒服很正常。先不急著回，等情緒平穩再看一次內容。</p></div>
+      <div><h3>把內容和語氣分開</h3><p>就算對方語氣不好，也看看裡面有沒有值得參考的地方。</p></div>
+      <div><h3>有道理就修正</h3><p>大方說聲謝謝並調整，反而讓人更信任你。</p></div>
+      <div><h3>沒道理也可以放下</h3><p>說明你的想法一次就好。遇到單純的謾罵，可以選擇不回應。</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="closing">好的批評，讓對方知道哪裡可以更好，也讓彼此還想繼續對話。</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    設計者：鍾孟修職能治療師<br>
+    愛迪樂健康促進團隊<br>
+    <a href="https://www.facebook.com/profile.php?id=100063748491881" target="_blank" rel="noopener">追蹤我們的臉書粉絲專頁</a>
+  </div>
+</footer>
+
+<script>
+// ---------- Hero demo ----------
+const demo = {
+  bad:{text:"這種東西也敢放上網？根本是外行，看了就好笑。",out:"對方只會想防衛或反擊，也不知道到底哪裡有問題。",dot:"var(--orange)"},
+  good:{text:"坐姿起身的示範很清楚。不過起身時膝蓋有點往內夾，長輩跟著做可能會不舒服，如果加一句「膝蓋對準腳尖」的提醒會更安全。你覺得呢？",out:"對方知道問題在哪、為什麼要改、可以怎麼改，也有空間回應。",dot:"var(--teal)"}
+};
+const bubble=document.getElementById('bubble'),bText=document.getElementById('bubbleText'),oText=document.getElementById('outText'),oDot=document.getElementById('outDot');
+function setDemo(m){
+  bubble.className='bubble '+m;bText.textContent=demo[m].text;oText.textContent=demo[m].out;oDot.style.background=demo[m].dot;
+  bText.classList.remove('fade');void bText.offsetWidth;bText.classList.add('fade');
+  document.querySelectorAll('.switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+}
+document.querySelectorAll('.switch button').forEach(b=>b.addEventListener('click',()=>setDemo(b.dataset.mode)));
+setDemo('bad');
+
+// ---------- Myths ----------
+const myths=[
+  ["我只是講話比較直。","直接和傷人是兩回事。直接是把重點說清楚；傷人是把力氣花在貶低對方。你可以直接指出問題，同時不攻擊人格。"],
+  ["罵得越兇，對方越會記住。","人感覺被攻擊時，注意力會放在保護自己，而不是聽內容。語氣越重，重點反而越難被聽進去。"],
+  ["好的批評就是要不留情面。","留餘地不是放水，而是給對方台階修正。保住面子，對方才比較願意改變。"],
+  ["不同意，就要辯到對方認輸。","批評的目的是讓事情變好，不是分出輸贏。對方沒有當場認同，不代表交流失敗，有時需要時間消化。"],
+  ["沒有提出解法，就不要批評。","指出問題本身就有價值。不過如果能附上可行的方向，你的意見會更容易被採用。"],
+  ["事實這麼明顯，對方不信就是笨。","人會相信錯誤的說法，常常不是因為笨，而是那個說法剛好說中了他的擔心或憤怒。先理解那份擔心，對方才有可能重新看一次事實。"]
+];
+const ml=document.getElementById('mythList');
+myths.forEach(([q,a])=>{
+  const b=document.createElement('button');b.className='myth';b.setAttribute('aria-expanded','false');
+  b.innerHTML=`<div class="myth-q"><span class="tag no">迷思</span><strong>「${q}」</strong><span class="plus" aria-hidden="true">+</span></div><div class="myth-a"><span class="tag yes">其實</span><p>${a}</p></div>`;
+  b.addEventListener('click',()=>b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')!=='true'));
+  ml.appendChild(b);
+});
+
+// ---------- Ladder ----------
+const rungs=[
+  ["人身攻擊","「你這個人就是不懂。」","#C9411D",34],
+  ["情緒發洩","「看了就火大。」","#E8552D",42],
+  ["空泛否定","「寫得很爛。」","#EE7A3E",50],
+  ["指出問題","「這段數字好像有誤。」","#E99A2C",62],
+  ["附上理由","「這段數字是很多年前的，現在情況可能不同。」","#3C9E8F",76],
+  ["提出建議","「可以改用最近一年的統計，會更有說服力。」","#028090",88],
+  ["邀請對話","「你當初選這份資料的考量是什麼？我們可以一起看看。」","#015F6B",100]
+];
+const ll=document.getElementById('ladderList');
+rungs.forEach(([t,e,c,w],i)=>{
+  if(i===4){const g=document.createElement('div');g.className='goal';g.textContent='建議至少做到這裡';ll.appendChild(g);}
+  const r=document.createElement('div');r.className='rung';
+  r.innerHTML=`<div class="lv">第 ${i+1} 階</div><div class="bar" style="background:${c};width:${w}%"><b>${t}</b><span>${e}</span></div>`;
+  ll.appendChild(r);
+});
+
+// ---------- Principles ----------
+const ic={
+  target:'<circle cx="14" cy="14" r="10"/><circle cx="14" cy="14" r="5"/><circle cx="14" cy="14" r="1.5" fill="currentColor"/>',
+  ear:'<path d="M9 18c0-6 2-11 7-11 4 0 6 3 6 6 0 4-4 5-4 8 0 2-1 4-4 4"/><path d="M13 13c0-2 1-3 3-3"/>',
+  pin:'<path d="M14 25s8-7 8-13a8 8 0 0 0-16 0c0 6 8 13 8 13z"/><circle cx="14" cy="12" r="3"/>',
+  book:'<path d="M4 6h8a3 3 0 0 1 3 3v15a2 2 0 0 0-2-2H4z"/><path d="M24 6h-8a3 3 0 0 0-3 3v15a2 2 0 0 1 2-2h9z"/>',
+  bulb:'<path d="M10 20h8M11 24h6"/><path d="M14 4a7 7 0 0 0-4 12.7V20h8v-3.3A7 7 0 0 0 14 4z"/>',
+  door:'<rect x="6" y="4" width="16" height="21" rx="2"/><circle cx="18" cy="15" r="1.3" fill="currentColor"/>',
+  eye:'<path d="M3 14s4-8 11-8 11 8 11 8-4 8-11 8S3 14 3 14z"/><circle cx="14" cy="14" r="3.5"/>',
+  leaf:'<path d="M6 22C6 10 14 5 23 5c0 9-5 17-17 17z"/><path d="M6 22l9-9"/>'
+};
+const prins=[
+  ["對事不對人","評論內容、做法和行為，不評論人格、外表或身分。","「這個做法」而不是「你這個人」",ic.target,"var(--orange)","var(--orange-soft)"],
+  ["先理解，再回應","確認自己真的看懂了，可以先用自己的話重述一次。","「你的意思是……，對嗎？」",ic.ear,"var(--teal)","var(--teal-soft)"],
+  ["具體，不籠統","指出是哪一段、哪一句、哪個數字讓你有疑問。","「第二段的數字」而不是「整篇都怪怪的」",ic.pin,"var(--amber)","var(--amber-soft)"],
+  ["說明理由","讓對方知道你的依據，是經驗、觀察還是資料。","「因為我在現場看過……」",ic.book,"var(--teal)","var(--teal-soft)"],
+  ["給一個方向","能的話，提出替代做法或可以參考的地方。","「如果改成……，會不會更好？」",ic.bulb,"var(--amber)","var(--amber-soft)"],
+  ["留有餘地","承認自己也可能看錯，讓對方有台階可以下。","「我的觀察是……」「也可能是我理解錯了」",ic.door,"var(--orange)","var(--orange-soft)"],
+  ["看場合","公開還是私下？涉及個人的錯誤，私下說比較好。","大的分歧，改用私訊或當面談",ic.eye,"var(--teal)","var(--teal-soft)"],
+  ["冷靜後再送出","情緒很滿的時候先存草稿，過一段時間再看一次。","先寫好，隔一陣子再按送出",ic.leaf,"var(--amber)","var(--amber-soft)"]
+];
+const pl=document.getElementById('prinList');
+prins.forEach(([t,d,e,svg,c,s])=>{
+  const el=document.createElement('div');el.className='pcard';
+  el.innerHTML=`<div class="ic" style="background:${s};color:${c}"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${svg}</svg></div><h3>${t}</h3><p>${d}</p><p class="eg">${e}</p>`;
+  pl.appendChild(el);
+});
+
+// ---------- Bias cards ----------
+const biasCards=[
+  ["先找共同在意的事","對方的擔心常常和你一樣，只是方向不同。","「我們都希望長輩平安。」",ic.target,"var(--teal)","var(--teal-soft)"],
+  ["還原原話","附上原文、研究或原始資料，讓對方自己看。","「原文在這裡，我們一起看看。」",ic.book,"var(--amber)","var(--amber-soft)"],
+  ["用提問代替糾正","讓對方自己發現落差，比被糾正更容易接受。","「這個說法是在哪裡看到的？」",ic.ear,"var(--orange)","var(--orange-soft)"],
+  ["給對方台階","承認這個說法確實容易讓人誤會。","「這標題我一開始也嚇了一跳。」",ic.door,"var(--teal)","var(--teal-soft)"],
+  ["一次只談一件事","不要把對方所有說法一起推翻，只處理最關鍵的錯誤。","一個錯誤說法，配一個事實",ic.pin,"var(--amber)","var(--amber-soft)"],
+  ["分清事實與價值","事實可以查證，價值可以不同。","「資料寫什麼」和「該怎麼做」分開談",ic.eye,"var(--orange)","var(--orange-soft)"],
+  ["不期待當場改變","目標是留下一個疑問，讓對方回去想一想。","說一次就好，不追著要對方認錯",ic.leaf,"var(--teal)","var(--teal-soft)"]
+];
+const bl=document.getElementById('biasList');
+biasCards.forEach(([t,d,e,svg,c,sft])=>{
+  const el=document.createElement('div');el.className='pcard';
+  el.innerHTML=`<div class="ic" style="background:${sft};color:${c}"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${svg}</svg></div><h3>${t}</h3><p>${d}</p><p class="eg">${e}</p>`;
+  bl.appendChild(el);
+});
+
+// ---------- Mistakes ----------
+const mistakes=[
+  ["人身攻擊","不談內容，直接針對對方的人格、能力或外表。","你腦袋有問題吧？","這個結論我不太同意，文中只舉了一個例子，可能還不足以推論到所有人。"],
+  ["貼標籤、扣帽子","把對方歸類成某一種人，就不必討論內容了。","典型的外行人觀點。","我想補充一些實務現場的狀況，跟文中描述的不太一樣：……"],
+  ["曲解原意","把對方的話誇大或扭曲後再反駁。","（原文：長輩運動要量力而為）所以你的意思是長輩都不用運動了？","你說要量力而為，我很同意。想請問平常是怎麼判斷「量力」的程度？"],
+  ["全盤否定","一句話否定全部，對方不知道問題在哪裡。","整篇都是垃圾。","前半段的說明很清楚；後半段的數據我找不到出處，能補上來源嗎？"],
+  ["酸言酸語","用反諷包裝不滿，表面客氣、實際嘲笑。","哇，真是好厲害的見解喔。","這個見解我第一次聽到，想多了解你是怎麼得出這個想法的？"],
+  ["猜測動機","不回應內容，改猜對方別有用心。","講這麼多，還不是想賣東西。","文中提到的產品，有沒有其他使用者的回饋可以參考？"],
+  ["翻舊帳、轉移話題","拿過去的事或不相關的事來壓過對方。","你上次也講錯，還好意思說？","這次的內容我有一個疑問：……"],
+  ["以偏概全","用一個人的言行，否定一整群人。","你們這種人都是這樣。","我遇過的情況不太一樣，分享給你參考：……"],
+  ["只丟情緒字眼","只留下一兩個字，沒有任何內容。","笑死。／傻眼。","讓我意外的是「每天只要五分鐘就夠」這一句，想知道這個說法的依據是什麼？"]
+];
+const mkl=document.getElementById('mistakeList');
+mistakes.forEach(([t,w,b,g])=>{
+  const el=document.createElement('div');el.className='mcard';
+  el.innerHTML=`<h3>${t}</h3><div class="why">${w}</div><div class="say bad"><span class="tag no">錯誤</span><span>${b}</span></div><div class="say good"><span class="tag yes">改寫</span><span>${g}</span></div><button class="flip" aria-expanded="false">看改寫</button>`;
+  const btn=el.querySelector('.flip');
+  btn.addEventListener('click',()=>{const o=el.classList.toggle('open');btn.textContent=o?'收起改寫':'看改寫';btn.setAttribute('aria-expanded',o);});
+  mkl.appendChild(el);
+});
+
+// ---------- Tabs ----------
+document.querySelectorAll('[role=tablist]').forEach(list=>{
+  const ts=[...list.querySelectorAll('[role=tab]')];
+  ts.forEach(t=>t.addEventListener('click',()=>{
+    ts.forEach(x=>{x.setAttribute('aria-selected',x===t);document.getElementById(x.getAttribute('aria-controls')).hidden=x!==t;});
+  }));
+});
+
+// ---------- Cases ----------
+const cases=[
+  {meta:"2024 年 1 月｜餐廳評論",title:"批評餐點難吃，用詞羞辱，最後演變成暴力",
+   what:"直播主 Toyz 到網紅超哥開的日本料理店用餐，在直播中批評醋飯難吃，用詞相當難聽，例如把醋飯比喻成排泄物，還質疑對方「好意思說做了二十年」。超哥認為這是刻意踢館，當晚趕回店內理論，雙方爆發衝突，Toyz 頭部遭毆打縫了十多針，引發社會討論。超哥後來一審被依傷害罪判刑。",
+   issues:[["批評變成羞辱","「不好吃」是評價，「跟排泄物一樣」是貶低。後者讓對方沒有任何台階。"],["把批評當成人身攻擊","餐點的評價，被當成對自己的挑釁，而不是可以改進的意見。"],["用暴力回應意見","不論對批評多不滿，動手都會讓所有道理消失，也讓自己承擔法律責任。"]],
+   point:"這個案例裡，雙方都失控了。批評的一方用詞過火，被批評的一方用了最糟的方式回應。",
+   rh:"換個方式",rl:"改寫示範",
+   rw:"評論的人可以這樣說：「醋飯偏濕、味道有點淡，對日式丼飯來說有點可惜，魚料本身倒是新鮮。」店家可以這樣回：「謝謝你吃得這麼仔細，醋飯的比例我們會再調整，歡迎下次再來給意見。」",
+   rwNote:"具體說出哪裡不好、為什麼不好，就已經是有用的批評，不需要加上羞辱。收到批評的人，說明一次就好。",
+   src:[["風傳媒","https://www.storm.mg/keyword/醋飯"],["NOWnews","https://www.nownews.com/news/6747324"]]},
+  {meta:"2022 年 3 月｜美國奧斯卡頒獎典禮",title:"拿他人外表開玩笑，引發台上衝突",
+   what:"頒獎人克里斯洛克在典禮上，拿威爾史密斯妻子的光頭造型開玩笑；她的光頭與掉髮的健康狀況有關。威爾史密斯隨即走上台打了對方一巴掌。事後他公開道歉，美國影藝學院也禁止他十年內出席相關活動。",
+   issues:[["拿外表與疾病開玩笑","對方無法選擇的身體狀況，不適合當成笑點。"],["公開場合讓人難堪","在全球直播的場合被當成笑料，當事人很難回應。"],["以暴力回應冒犯","即使感到被冒犯，動手也讓自己從受委屈的一方變成犯錯的一方。"]],
+   point:"這是一個雙方都值得反思的經典案例：開玩笑的一方沒有留餘地，被冒犯的一方也用了最糟的方式回應。",
+   rw:"被冒犯時可以這樣表達：「剛才的玩笑讓我太太很難過，她的掉髮是健康因素造成的，希望大家不要拿這件事開玩笑。」",
+   rwNote:"說出感受和事實，把界線講清楚，比用力反擊更有力量。",
+   src:[]},
+  {meta:"2026 年 1 月｜脫口秀演出片段",title:"脫口秀片段放上網路，引發兩極討論",
+   what:"脫口秀演員林妍霏在售票的演出中，以台灣男生迷戀韓籍啦啦隊員為題，模仿李多慧、李珠珢說中文的口音，並開玩笑猜測對方私下的樣子。在劇場裡，觀眾是買票進場、了解脫口秀常會揶揄名人的表演形式；但演出片段放上社群平台後，被許多不熟悉脫口秀的網友看到，引發大量反彈，也有人為這種表演形式辯護，兩方意見爭論不休。",
+   ih:"為什麼會引起兩極反應",
+   issues:[["觀眾不同","劇場裡的觀眾知道這是表演；網路上的觀眾，很多人沒有這個前提。"],["少了現場脈絡","片段剪出來後，前後的鋪陳和現場氣氛都不見了，只剩下揶揄的部分。"],["被談論的人也會看到","放上網路後，當事人和她們的粉絲都看得到，感受自然不同。"]],
+   point:"這個案例提醒我們「看場合」。同一段內容，在劇場裡是表演，放到網路上就成了公開發言；內容沒有改變，但觀眾和意義都變了。",
+   rh:"如果要放上網路",rl:"可以這樣想",
+   rw:"上傳前多想一步：這段內容離開劇場後，不了解脫口秀的人看得懂嗎？被談論的人看到會有什麼感受？必要時可以挑選不針對特定人物的段落公開，或在說明中補上演出的背景。",
+   rwNote:"日常生活也一樣：朋友之間私下的玩笑，截圖貼到公開社群，意義就不同了。",
+   src:[["聯合新聞網","https://udn.com/news/story/7001/9255215"],["NOWnews","https://www.nownews.com/news/6776829"]]},
+];
+const csl=document.getElementById('caseList');
+cases.forEach(c=>{
+  const el=document.createElement('article');el.className='case';
+  const iss=c.issues.map(([t,d])=>`<li><span class="tag no">${t}</span><span>${d}</span></li>`).join('');
+  const src=c.src.length?`<div class="src">資料來源：${c.src.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('、')}</div>`:'';
+  el.innerHTML=`<div class="case-head"><div class="meta">${c.meta}</div><h3>${c.title}</h3></div>
+  <div class="case-body"><h4>發生了什麼</h4><p>${c.what}</p>
+  <h4>${c.ih||"為什麼讓人不舒服"}</h4><ul class="issues">${iss}</ul>
+  <p style="margin-top:14px">${c.point}</p>
+  <h4>${c.rh||"換個方式"}</h4><div class="rw"><small>${c.rl||"改寫示範"}</small>${c.rw}</div><p class="note">${c.rwNote}</p>${src}</div>`;
+  csl.appendChild(el);
+});
+
+// ---------- Phrases ----------
+const phrases=["我想補充一個不同的角度：","這段我讀起來有點疑問，想確認一下：","可能是我理解錯了，你的意思是……嗎？","我同意你說的……，不過關於……我有不同的看法。","我的經驗不太一樣，提供給你參考：","這個數據的來源是哪裡？我想進一步了解。","如果改成……，會不會更清楚？","謝謝分享，我有一個小建議：","這部分做得很好，另外有一點也許可以再調整："];
+const cl=document.getElementById('chipList');
+phrases.forEach(p=>{
+  const c=document.createElement('button');c.className='chip';c.textContent=p;
+  c.addEventListener('click',async()=>{
+    try{await navigator.clipboard.writeText(p);c.textContent='已複製';}catch(e){c.textContent='請長按選取文字';}
+    c.classList.add('copied');setTimeout(()=>{c.textContent=p;c.classList.remove('copied');},1400);
+  });
+  cl.appendChild(c);
+});
+
+// ---------- Quiz ----------
+const quiz=[
+  ["同事的企劃書有不少錯字。",["你是國小沒畢業嗎？","第 3 頁和第 5 頁有幾個錯字，送出前要不要再校對一次？需要的話我可以幫忙看。","算了，我自己改比較快。"],1,"具體指出位置，也給了對方修正的機會。第三個選項雖然不傷人，但對方沒有學到東西。"],
+  ["有人在 Threads 說「每天一定要走一萬步才健康」，你不太同意。",["又是一個沒讀書的。","一萬步早就是迷思了好嗎，笑死。","我看過一些研究提到，步數少一些也有健康上的好處。想請問一萬步這個說法是參考哪裡的資料？"],2,"用提問取代宣判，也說明了你的依據，對方比較願意繼續聊。"],
+  ["朋友煮的菜對你來說太鹹。",["這能吃嗎？","很香耶！不過鹹度對我來說稍微重一點，可能是我口味比較淡。","什麼都不說，默默少吃一點。"],1,"先肯定、再具體說出感受，並且留了餘地（是我口味比較淡）。"],
+  ["你讀到一篇文章，覺得作者的結論下得太快。",["作者根本只是想紅。","整篇都錯。","文中的例子很有說服力，但只有一個案例，結論能不能套用到大多數人，可能還需要更多資料。"],2,"沒有猜測動機，也沒有全盤否定，而是具體說出推論上的限制。"]
+];
+const ql=document.getElementById('quizList');let answered=0,correct=0;
+quiz.forEach(([q,opts,ans,fb],qi)=>{
+  const el=document.createElement('div');el.className='q';
+  el.innerHTML=`<h3>${qi+1}. ${q}</h3><div class="opts"></div><div class="fb">${fb}</div>`;
+  const box=el.querySelector('.opts');
+  opts.forEach((o,i)=>{
+    const b=document.createElement('button');b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(el.classList.contains('done'))return;
+      el.classList.add('done');answered++;if(i===ans)correct++;
+      box.children[ans].classList.add('right');if(i!==ans)b.classList.add('wrong');
+      if(answered===quiz.length)document.getElementById('score').textContent=`你答對了 ${correct}／${quiz.length} 題`;
+    });
+    box.appendChild(b);
+  });
+  ql.appendChild(el);
+});
+
+// ---------- Checklist ----------
+const cks=["我針對的是內容，不是人","我有具體指出是哪裡","我有說明為什麼這樣想","這些話我當面也說得出口","我留了讓對方回應的空間","這則回覆能讓討論變好，而不只是發洩情緒"];
+const ckl=document.getElementById('ckList'),bar=document.getElementById('ringBar'),num=document.getElementById('ckNum'),ready=document.getElementById('ready');
+cks.forEach(t=>{
+  const l=document.createElement('label');l.className='ck';
+  l.innerHTML=`<input type="checkbox"><span>${t}</span>`;
+  l.querySelector('input').addEventListener('change',upd);ckl.appendChild(l);
+});
+function upd(){
+  const n=ckl.querySelectorAll('input:checked').length;num.textContent=n;
+  bar.style.strokeDashoffset=389.6*(1-n/cks.length);
+  ready.textContent=n===cks.length?'都確認好了，可以送出了':'';
+}
+</script>
+</body>
+</html>
